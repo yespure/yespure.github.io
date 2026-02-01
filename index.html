@@ -2,10 +2,70 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <title>我的第一个 GitHub 网站</title>
+  <title>Dot Reveal</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #0b0b0b;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello GitHub Pages 👋</h1>
-  <p>这是我第一个网站</p>
+
+<canvas id="canvas"></canvas>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+
+let width, height;
+let mouse = { x: -9999, y: -9999 };
+const spacing = 40;      // 波点间距
+const radius = 120;      // 鼠标影响范围
+
+function resize() {
+  width = canvas.width = window.innerWidth;
+  height = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+window.addEventListener("mousemove", e => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+function draw() {
+  ctx.clearRect(0, 0, width, height);
+
+  for (let x = 0; x < width; x += spacing) {
+    for (let y = 0; y < height; y += spacing) {
+
+      const dx = x - mouse.x;
+      const dy = y - mouse.y;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < radius) {
+        // 距离越近越亮
+        const alpha = 1 - dist / radius;
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+        ctx.beginPath();
+        ctx.arc(x, y, 3, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  requestAnimationFrame(draw);
+}
+
+draw();
+</script>
+
 </body>
 </html>
