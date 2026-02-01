@@ -128,12 +128,53 @@
             letter-spacing: 2px;
             color: #aaa;
         }
+        #bg-image-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 70% auto;
+
+        opacity: 0;
+        transition: opacity 1s ease;
+
+        mask-image: radial-gradient(
+            circle at center,
+            rgba(0,0,0,1) 45%,
+            rgba(0,0,0,0.6) 60%,
+            rgba(0,0,0,0) 75%
+        );
+        -webkit-mask-image: radial-gradient(
+            circle at center,
+            rgba(0,0,0,1) 45%,
+            rgba(0,0,0,0.6) 60%,
+            rgba(0,0,0,0) 75%
+        );
+    }
+
+    #bg-dots-layer {
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+
+        background-image: radial-gradient(#000 0.8px, transparent 0.8px);
+        background-size: 10px 10px;
+        opacity: 0.08;
+    }
 
     </style>
 </head>
 <body>
 
     <div class="logo">GALLERIE D'ART</div>
+    
+    <div id="bg-image-layer"></div>
+    
+    <div id="bg-dots-layer"></div>
 
     <div id="canvas-container"></div>
 
@@ -245,6 +286,8 @@
             'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=800&q=80',
             'https://images.unsplash.com/photo-1577720580479-7d839d829c73?w=800&q=80'
         ];
+        const bgLayer = document.getElementById('bg-image-layer');
+        let currentBgIndex = -1;
 
         const paintingGroups = [];
 
@@ -319,17 +362,28 @@
             mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
         });
 
-        function updateUI(scrollX) {
-            const rawIndex = Math.round(scrollX / CONFIG.spacingX);            
-            const safeIndex = ((rawIndex % CONFIG.slideCount) + CONFIG.slideCount) % CONFIG.slideCount;     
-            for(let i=0; i<CONFIG.slideCount; i++) {
-                const el = document.getElementById(`slide-${i}`);
-                if(el) {
-                    if(i === safeIndex) el.classList.add('active');
-                    else el.classList.remove('active');
-                }
-            }
+       function updateUI(scrollX) {
+    const rawIndex = Math.round(scrollX / CONFIG.spacingX);            
+    const safeIndex = ((rawIndex % CONFIG.slideCount) + CONFIG.slideCount) % CONFIG.slideCount;     
+
+    for (let i = 0; i < CONFIG.slideCount; i++) {
+        const el = document.getElementById(`slide-${i}`);
+        if (el) {
+            if (i === safeIndex) el.classList.add('active');
+            else el.classList.remove('active');
         }
+    }
+
+    if (safeIndex !== currentBgIndex) {
+        currentBgIndex = safeIndex;
+        bgLayer.style.opacity = 0;
+
+        setTimeout(() => {
+            bgLayer.style.backgroundImage = `url(${images[safeIndex]})`;
+            bgLayer.style.opacity = 0.25;
+        }, 300);
+    }
+}
 
         function animate() {
             requestAnimationFrame(animate);
@@ -357,7 +411,7 @@
         });
 
         animate();
-
+        
     </script>
 </body>
 </html>
