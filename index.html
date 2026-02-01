@@ -13,7 +13,7 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #f7f7f5;
+            background-color: #9c64ba;
             font-family: 'Lato', sans-serif;
             color: #111;
         }
@@ -163,7 +163,7 @@
 
         background-image: radial-gradient(#000 0.8px, transparent 0.8px);
         background-size: 10px 10px;
-        opacity: 0.3;
+        opacity: 0.2;
     }
 
     </style>
@@ -256,7 +256,7 @@
         const totalGalleryWidth = CONFIG.slideCount * CONFIG.spacingX;
 
         const scene = new THREE.Scene();
-        scene.background = null;
+        scene.background = null
         scene.fog = new THREE.Fog(0xf7f7f5, 10, 110); 
 
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
@@ -296,6 +296,7 @@
             group.position.set(i * CONFIG.spacingX, 0, 0);
             const mat = new THREE.MeshBasicMaterial({ map: textureLoader.load(images[i]) });
             const mesh = new THREE.Mesh(planeGeo, mat);
+            mesh.userData.link = `detail-${i}.html`;
             const edges = new THREE.EdgesGeometry(planeGeo);
             const outline = new THREE.LineSegments(edges, new THREE.LineBasicMaterial({ color: 0x222222 }));
 
@@ -327,7 +328,6 @@
         let currentScroll = 0;
         let targetScroll = 0;
         let snapTimer = null;
-        let mouse = { x: 0, y: 0 };
 
         function snapToNearest() {
             const index = Math.round(targetScroll / CONFIG.spacingX);
@@ -357,10 +357,6 @@
             snapToNearest();
         });
 
-        window.addEventListener('mousemove', (e) => {
-            mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
-            mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
-        });
 
        function updateUI(scrollX) {
     const rawIndex = Math.round(scrollX / CONFIG.spacingX);            
@@ -380,7 +376,7 @@
 
         setTimeout(() => {
             bgLayer.style.backgroundImage = `url(${images[safeIndex]})`;
-            bgLayer.style.opacity = 0.6;
+            bgLayer.style.opacity = 1;
         }, 300);
     }
 }
@@ -397,9 +393,7 @@
                 const distFromCam = currentScroll - originalX;
                 const shift = Math.round(distFromCam / totalGalleryWidth) * totalGalleryWidth;
                 group.position.x = originalX + shift;
-            });
-            camera.rotation.x = mouse.y * 0.05; 
-            camera.rotation.y = -mouse.x * 0.05;
+            }); 
             updateUI(currentScroll);
             renderer.render(scene, camera);
         }
@@ -412,6 +406,25 @@
 
         animate();
         
+        const raycaster = new THREE.Raycaster();
+const clickMouse = new THREE.Vector2();
+
+window.addEventListener('click', (event) => {
+    clickMouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    clickMouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+
+    raycaster.setFromCamera(clickMouse, camera);
+    const intersects = raycaster.intersectObjects(
+        paintingGroups.map(g => g.children[1]) // mesh
+    );
+
+    if (intersects.length > 0) {
+        const link = intersects[0].object.userData.link;
+        if (link) {
+            window.location.href = link;
+        }
+    }
+});
     </script>
 </body>
 </html>
