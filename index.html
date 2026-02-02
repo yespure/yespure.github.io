@@ -7,58 +7,64 @@
 <style>
   body {
     margin: 0;
-    display: flex;
     font-family: sans-serif;
   }
 
-  /* Sidebar 样式 */
+  /* Sidebar 贴右边，垂直居中 */
   .sidebar {
     position: fixed;
-    top: 50%;
-    left: 0;
+    top: 50%;              
+    right: 0;                 /* 改为右边 */
     transform: translateY(-50%);
-    width: 200px;
-    height: 100vh;
+    display: flex;
+    flex-direction: column;    
+    align-items: right;       /* 水平居中 */
     background: transparent;
-    color: #fff;
-    flex-direction: column;
-    justify-content: center;  
-    align-items: center;
-    padding: 0;
   }
 
+  /* sidebar 菜单样式 */
   .sidebar a {
-    padding: 10px 20px;
-    color: #ccc;
-    margin: 20px 0;
+    color: #222;              /* 默认文字颜色 */
     text-decoration: none;
+    font-size: 1.2rem;
+    margin: 20px 0;           /* 上下间隔 */
+    padding: 8px 16px;        /* 给背景留空间 */
+    border-radius: 6px;       /* 圆角美观 */
+    display: block;            /* 块级元素才能有 margin 和 padding */
+    transition: all 0.3s;
   }
 
+  /* 鼠标悬停 */
+  .sidebar a:hover {
+    background-color: #222;
+    color: #ffffff;
+  }
+
+  /* 当前 section 高亮 */
   .sidebar a.active {
-    background: #555;
-    color: #fff;
+    background-color: #222;  /* 黑色背景 */
+    color: #fff;             /* 文字反色 */
   }
 
   /* Main 内容区 */
   .main {
-    margin-left: 200px;
-    width: calc(100% - 200px);
+    margin-right: 200px;     /* 给 sidebar 留出空间 */
   }
 
   section {
-    height: 100vh; /* 每页占满整个屏幕 */
+    height: 100vh;           /* 每页占满整个屏幕 */
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ffffff;
   }
 
   section:nth-child(odd) {
-    background: #f0f0f0;
+    background: #ffffff;
   }
   section:nth-child(even) {
-    background: #e0e0e0;
+    background: #ffffff;
   }
 </style>
 </head>
@@ -86,7 +92,7 @@
   const sections = document.querySelectorAll('section');
   const links = document.querySelectorAll('.sidebar a');
 
-  // 滚动监听
+  // 滚动监听，高亮 sidebar
   window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(section => {
@@ -105,7 +111,7 @@
     });
   });
 
-  // 点击 sidebar 滚动
+  // 点击 sidebar 平滑滚动
   links.forEach(link => {
     link.addEventListener('click', e => {
       e.preventDefault();
@@ -117,3 +123,4 @@
 
 </body>
 </html>
+
