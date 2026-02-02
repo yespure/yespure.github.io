@@ -3,98 +3,123 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>滚动页面 + Sidebar</title>
+<title>Full Screen Waves</title>
 <style>
-
   @import url('https://fonts.googleapis.com/css?family=Raleway:900&display=swap');
+  
   body {
     margin: 0;
     font-family: sans-serif;
+    background-color: #ffffff; /* 背景色放在这里 */
+    overflow-x: hidden;
   }
 
-  /* Sidebar 贴右边，垂直居中 */
+  /* 修正：让背景容器真正占满全屏并置于底层 */
+  .bg-waves {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* 确保在所有内容下面 */
+    pointer-events: none;
+    display: block;
+  }
+
+  .js-canvas {
+    width: 100%;
+    height: 100%;
+  }
+
   .sidebar {
     position: fixed;
-    top: 50%;              
-    right: 0;                 /* 改为右边 */
+    top: 50%;
+    right: 20px;
     transform: translateY(-50%);
     display: flex;
-    flex-direction: column;    
-    align-items: right;       /* 水平居中 */
-    background: transparent;
+    flex-direction: column;
+    z-index: 10; /* 保证在最前面 */
   }
 
-  /* sidebar 菜单样式 */
   .sidebar a {
-    color: #222;              /* 默认文字颜色 */
+    color: #222;
     text-decoration: none;
     font-size: 1.2rem;
-    margin: 20px 0;           /* 上下间隔 */
-    padding: 8px 16px;        /* 给背景留空间 */
-    border-radius: 6px;       /* 圆角美观 */
-    display: block;            /* 块级元素才能有 margin 和 padding */
+    margin: 10px 0;
+    padding: 8px 16px;
+    border-radius: 6px;
     transition: all 0.3s;
+    text-align: right;
   }
 
-  /* 鼠标悬停 */
-  .sidebar a:hover {
+  .sidebar a.active, .sidebar a:hover {
     background-color: #222;
-    color: #ffffff;
+    color: #fff;
   }
 
-  /* 当前 section 高亮 */
-  .sidebar a.active {
-    background-color: #222;  /* 黑色背景 */
-    color: #fff;             /* 文字反色 */
-  }
-
-  /* Main 内容区 */
   .main {
-    margin-right: 200px;     /* 给 sidebar 留出空间 */
+    margin-right: 150px;
   }
 
   section {
-    height: 100vh;           /* 每页占满整个屏幕 */
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 2rem;
-    border-bottom: 1px solid #ffffff;
+    background: transparent; /* 关键：必须透明，否则会遮挡动画 */
   }
 
-  section:nth-child(odd) {
-    background: #ffffff;
-  }
-  section:nth-child(even) {
-    background: #ffffff;
-  }
-
+  /* Morphing Text Styles */
   #container {
-	/* Center the text in the viewport. */
-	position: absolute;
-	margin: auto;
-	width: 100vw;
-	height: 80pt;
-	top: 0;
-	bottom: 0;
-	
-	/* This filter is a lot of the magic, try commenting it out to see how the morphing works! */
-	filter: url(#threshold) blur(0.6px);
+    position: absolute;
+    margin: auto;
+    width: 100vw;
+    height: 80pt;
+    top: 0;
+    bottom: 0;
+    filter: url(#threshold) blur(0.6px);
+  }
+
+  #text1, #text2 {
+    position: absolute;
+    width: 100%;
+    font-family: 'Raleway', sans-serif;
+    font-size: 120pt;
+    text-align: left;
+    left: 150px;
+    user-select: none;
+  }
+
+  #fixedText {
+    font-family: 'Raleway', sans-serif;
+    font-size: 120pt;
+    position: absolute;
+    top: -200pt;
+    left: 150px;
+    pointer-events: none;
+  }
+
+  #fixedText div:nth-child(1) {
+  color: red; /* 这里把 Red 改回红色了，如果你要黑色请自行修改 */
 }
 
-/* Your average text styling */
-#text1, #text2 {
-	position: absolute;
-	width: 100%;
-	display: inline-block;
-	
-	font-family: 'Raleway', sans-serif;
-	font-size: 80pt;
-	
-	text-align: center;
-	
-	user-select: none;
+#fixedText div:nth-child(2) {
+  color: black;
+  position: relative;
+  top: -40pt; /* 在 line-height 的基础上，再微调 the 向上移动的距离 */
 }
+
+#descriText {
+    font-family: 'Raleway', sans-serif;
+    font-size: 30pt;  /* 建议小一点更有设计感 */
+    position: absolute;
+    top: 420pt;       /* 放在动态文字下方 */
+    left: 70px;          /* 相对于 container 是 0 */  
+    color: #333;
+    line-height: 1.5;
+}
+
 </style>
 </head>
 <body>
@@ -103,165 +128,190 @@
   <a href="#section1" class="active">Home</a>
   <a href="#section2">AboutMe</a>
   <a href="#section3">Projects</a>
-  <a href="#section4">worldbuilding</a>
+  <a href="#section4">World</a>
   <a href="#section5">Ideas</a>
-  <a href="#section6">ContactMe</a>
+  <a href="#section6">Contact</a>
 </div>
 
 <div class="main">
-  <section id="section1"></section>
-  <section id="section2">待定</section>
-  <section id="section3">待定</section>
-  <section id="section4">待定</section>
-  <section id="section5">待定</section>
-  <section id="section6">待定</section>
+  <section id="section1">
+    <div id="container">
+      <div id="fixedText">
+        <div style="color:red">Red-tcl</div>
+        <div style="color:black">the</div>
+      </div>
+      <span id="text1"></span>
+      <span id="text2"></span>
+    </div>
+   <div id="descriText">
+            |Committed to sharing my ideas through ART|
+        </div>
+  </section>
+  <section id="section2">About Me Content</section>
+  <section id="section3">Projects Content</section>
+  <section id="section4">World Building</section>
+  <section id="section5">Ideas</section>
+  <section id="section6">Contact</section>
 </div>
 
-<!-- Explanation in JS tab -->
-
-<!-- The two texts -->
-<div id="container">
-	<span id="text1"></span>
-	<span id="text2"></span>
-</div>
-
-<!-- The SVG filter used to create the merging effect -->
-<svg id="filters">
-	<defs>
-		<filter id="threshold">
-			<!-- Basically just a threshold effect - pixels with a high enough opacity are set to full opacity, and all other pixels are set to completely transparent. -->
-			<feColorMatrix in="SourceGraphic"
-					type="matrix"
-					values="1 0 0 0 0
-									0 1 0 0 0
-									0 0 1 0 0
-									0 0 0 255 -140" />
-		</filter>
-	</defs>
+<svg id="filters" style="display:none">
+  <defs>
+    <filter id="threshold">
+      <feColorMatrix in="SourceGraphic" type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 255 -140" />
+    </filter>
+  </defs>
 </svg>
 
+<a-waves class="bg-waves">
+  <canvas class="js-canvas"></canvas>
+</a-waves>
+
 <script>
-  const sections = document.querySelectorAll('section');
-  const links = document.querySelectorAll('.sidebar a');
+function Noise(e){this.p=new Uint8Array(256),this.reset(e)}Noise.prototype.reset=function(e){for(var t=0;t<256;t++)this.p[t]=t;for(t=255;t>0;t--){var r=Math.floor(Math.random()*(t+1)),o=this.p[t];this.p[t]=this.p[r],this.p[r]=o}},Noise.prototype.perlin2=function(e,t){var r=Math.floor(e)&255,o=Math.floor(t)&255;e-=Math.floor(e),t-=Math.floor(t);var n=function(e){return e*e*e*(e*(6*e-15)+10)},a=n(e),i=n(t),l=this.p[r]+o,s=this.p[r+1]+o,p=this.p[l],f=this.p[l+1],d=this.p[s],h=this.p[s+1];return function(e,t,r){return t+e*(r-t)}(i,function(e,t,r){return t+e*(r-t)}(a,function(e,t,r){var o=15&e;return(o<8?t:r)*(1&o?-1:1)+(o<4?r:12==o||14==o?t:0)*(2&o?-1:1)}(p,e,t),function(e,t,r){var o=15&e;return(o<8?t:r)*(1&o?-1:1)+(o<4?r:12==o||14==o?t:0)*(2&o?-1:1)}(d,e-1,t)),function(e,t,r){return t+e*(r-t)}(a,function(e,t,r){var o=15&e;return(o<8?t:r)*(1&o?-1:1)+(o<4?r:12==o||14==o?t:0)*(2&o?-1:1)}(f,e,t-1),function(e,t,r){var o=15&e;return(o<8?t:r)*(1&o?-1:1)+(o<4?r:12==o||14==o?t:0)*(2&o?-1:1)}(h,e-1,t-1)))};
 
-  // 滚动监听，高亮 sidebar
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.clientHeight;
-      if (pageYOffset >= sectionTop - sectionHeight / 2) {
-        current = section.getAttribute('id');
-      }
-    });
+const sections = document.querySelectorAll('section');
+const links = document.querySelectorAll('.sidebar a');
 
-    links.forEach(link => {
-      link.classList.remove('active');
-      if (link.getAttribute('href') === '#' + current) {
-        link.classList.add('active');
-      }
-    });
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(section => {
+    const sectionTop = section.offsetTop;
+    if (pageYOffset >= sectionTop - 200) {
+      current = section.getAttribute('id');
+    }
   });
-
-  // 点击 sidebar 平滑滚动
   links.forEach(link => {
-    link.addEventListener('click', e => {
-      e.preventDefault();
-      const target = document.querySelector(link.getAttribute('href'));
-      target.scrollIntoView({ behavior: 'smooth' });
-    });
+    link.classList.remove('active');
+    if (link.getAttribute('href') === '#' + current) link.classList.add('active');
   });
+});
 
-  const elts = {
-	text1: document.getElementById("text1"),
-	text2: document.getElementById("text2")
-};
+links.forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(link.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+  });
+});
 
-// The strings to morph between. You can change these to anything you want!
-const texts = [
-	"creator",
-	"designer",
-	"gamer",
-	"producer",
-];
-
-// Controls the speed of morphing.
+// Morphing Logic
+const elts = { text1: document.getElementById("text1"), text2: document.getElementById("text2") };
+const texts = ["creator", "designer", "gamer", "producer"];
 const morphTime = 1;
 const cooldownTime = 0.25;
-
-let textIndex = texts.length - 1;
-let time = new Date();
-let morph = 0;
-let cooldown = cooldownTime;
-
+let textIndex = texts.length - 1, time = new Date(), morph = 0, cooldown = cooldownTime;
 elts.text1.textContent = texts[textIndex % texts.length];
 elts.text2.textContent = texts[(textIndex + 1) % texts.length];
 
 function doMorph() {
-	morph -= cooldown;
-	cooldown = 0;
-	
-	let fraction = morph / morphTime;
-	
-	if (fraction > 1) {
-		cooldown = cooldownTime;
-		fraction = 1;
-	}
-	
-	setMorph(fraction);
+  morph -= cooldown; cooldown = 0;
+  let fraction = morph / morphTime;
+  if (fraction > 1) { cooldown = cooldownTime; fraction = 1; }
+  setMorph(fraction);
 }
 
-// A lot of the magic happens here, this is what applies the blur filter to the text.
 function setMorph(fraction) {
-	// fraction = Math.cos(fraction * Math.PI) / -2 + .5;
-	
-	elts.text2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
-	elts.text2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
-	
-	fraction = 1 - fraction;
-	elts.text1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
-	elts.text1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
-	
-	elts.text1.textContent = texts[textIndex % texts.length];
-	elts.text2.textContent = texts[(textIndex + 1) % texts.length];
+  elts.text2.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+  elts.text2.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+  fraction = 1 - fraction;
+  elts.text1.style.filter = `blur(${Math.min(8 / fraction - 8, 100)}px)`;
+  elts.text1.style.opacity = `${Math.pow(fraction, 0.4) * 100}%`;
+  elts.text1.textContent = texts[textIndex % texts.length];
+  elts.text2.textContent = texts[(textIndex + 1) % texts.length];
 }
 
 function doCooldown() {
-	morph = 0;
-	
-	elts.text2.style.filter = "";
-	elts.text2.style.opacity = "100%";
-	
-	elts.text1.style.filter = "";
-	elts.text1.style.opacity = "0%";
+  morph = 0;
+  elts.text2.style.filter = ""; elts.text2.style.opacity = "100%";
+  elts.text1.style.filter = ""; elts.text1.style.opacity = "0%";
 }
 
-// Animation loop, which is called every frame.
 function animate() {
-	requestAnimationFrame(animate);
-	
-	let newTime = new Date();
-	let shouldIncrementIndex = cooldown > 0;
-	let dt = (newTime - time) / 1000;
-	time = newTime;
-	
-	cooldown -= dt;
-	
-	if (cooldown <= 0) {
-		if (shouldIncrementIndex) {
-			textIndex++;
-		}
-		
-		doMorph();
-	} else {
-		doCooldown();
-	}
+  requestAnimationFrame(animate);
+  let newTime = new Date();
+  let dt = (newTime - time) / 1000;
+  time = newTime;
+  cooldown -= dt;
+  if (cooldown <= 0) {
+    if (morph === 0) textIndex++;
+    doMorph();
+  } else {
+    doCooldown();
+  }
 }
-
-// Start the animation.
 animate();
-</script>
 
+// AWaves Web Component 逻辑 (保持不变，但现在有了 Noise 类它能跑了)
+class AWaves extends HTMLElement {
+  connectedCallback() {
+    this.canvas = this.querySelector(".js-canvas");
+    this.ctx = this.canvas.getContext("2d");
+    this.mouse = { x: -100, y: -100, lx: 0, ly: 0, sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false };
+    this.lines = [];
+    this.noise = new Noise(Math.random());
+    this.setSize();
+    this.setLines();
+    this.bindEvents();
+    requestAnimationFrame(this.tick.bind(this));
+  }
+  bindEvents() {
+    window.addEventListener("resize", this.onResize.bind(this));
+  }
+  onResize() { this.setSize(); this.setLines(); }
+  onMouseMove(e) { this.updateMousePosition(e.clientX, e.clientY); }
+  updateMousePosition(x, y) {
+    const b = this.getBoundingClientRect();
+    this.mouse.x = x - b.left;
+    this.mouse.y = y - b.top;
+    if (!this.mouse.set) {
+      this.mouse.sx = this.mouse.lx = this.mouse.x;
+      this.mouse.sy = this.mouse.ly = this.mouse.y;
+      this.mouse.set = true;
+    }
+  }
+  setSize() {
+    this.canvas.width = window.innerWidth;
+    this.canvas.height = window.innerHeight;
+  }
+  setLines() {
+    const { width, height } = this.canvas;
+    this.lines = [];
+    const xGap = 15, yGap = 35;
+    const rows = Math.ceil(height / yGap) + 2;
+    const cols = Math.ceil(width / xGap) + 2;
+    for (let i = 0; i < cols; i++) {
+      const points = [];
+      for (let j = 0; j < rows; j++) {
+        points.push({ x: i * xGap, y: j * yGap, wave: { x: 0, y: 0 }, cursor: { x: 0, y: 0, vx: 0, vy: 0 } });
+      }
+      this.lines.push(points);
+    }
+  }
+
+  tick(time) {
+    const { mouse, ctx, canvas } = this;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.beginPath();
+    ctx.strokeStyle = "rgba(0,0,0,0.15)"; // 调淡一点，更好看
+
+    this.lines.forEach(points => {
+      points.forEach((p, i) => {
+        const move = this.noise.perlin2((p.x + time * 0.01) * 0.002, (p.y + time * 0.005) * 0.002) * 10;
+        p.wave.x = Math.cos(move) * 20;
+        p.wave.y = Math.sin(move) * 10;
+        
+
+        const finalX = p.x + p.wave.x + p.cursor.x;
+        const finalY = p.y + p.wave.y + p.cursor.y;
+        if (i === 0) ctx.moveTo(finalX, finalY); else ctx.lineTo(finalX, finalY);
+      });
+    });
+    ctx.stroke();
+    requestAnimationFrame(this.tick.bind(this));
+  }
+}
+customElements.define("a-waves", AWaves);
+</script>
 </body>
 </html>
 
