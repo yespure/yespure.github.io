@@ -1,29 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>滚动页面 + Sidebar</title>
+<style>
+  body {
+    margin: 0;
+    display: flex;
+    font-family: sans-serif;
+  }
+
+  /* Sidebar 样式 */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 200px;
+    height: 100vh;
+    background: #222;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+  }
+
+  .sidebar a {
+    padding: 10px 20px;
+    color: #ccc;
+    text-decoration: none;
+  }
+
+  .sidebar a.active {
+    background: #555;
+    color: #fff;
+  }
+
+  /* Main 内容区 */
+  .main {
+    margin-left: 200px;
+    width: calc(100% - 200px);
+  }
+
+  section {
+    height: 100vh; /* 每页占满整个屏幕 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  section:nth-child(odd) {
+    background: #f0f0f0;
+  }
+  section:nth-child(even) {
+    background: #e0e0e0;
+  }
+</style>
+</head>
 <body>
-    <!-- 首页文字融合 -->
-    <section id="hero">
-        <div id="text-merge-layer">
-            <span id="text1" class="merge-text">Ethereal</span>
-            <span id="text2" class="merge-text">Form</span>
-        </div>
-    </section>
 
-    <!-- 画廊 section -->
-    <section id="gallery-section">
-        <div id="canvas-container"></div>
-        <div id="ui-layer"> ...slides... </div>
-    </section>
+<div class="sidebar">
+  <a href="#section1" class="active">页面1</a>
+  <a href="#section2">页面2</a>
+  <a href="#section3">页面3</a>
+  <a href="#section4">页面4</a>
+</div>
 
-    <!-- SVG filter -->
-    <svg id="filters" style="display:none;">
-        <defs>
-            <filter id="threshold">
-                <feColorMatrix in="SourceGraphic"
-                        type="matrix"
-                        values="1 0 0 0 0
-                                0 1 0 0 0
-                                0 0 1 0 0
-                                0 0 0 255 -140" />
-            </filter>
-        </defs>
-    </svg>
+<div class="main">
+  <section id="section1">页面1内容</section>
+  <section id="section2">页面2内容</section>
+  <section id="section3">页面3内容</section>
+  <section id="section4">页面4内容</section>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('section');
+  const links = document.querySelectorAll('.sidebar a');
+
+  // 滚动监听
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.clientHeight;
+      if (pageYOffset >= sectionTop - sectionHeight / 2) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    links.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+  });
+
+  // 点击 sidebar 滚动
+  links.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+</script>
+
 </body>
+</html>
