@@ -81,6 +81,7 @@
     font-family: 'Raleway', sans-serif;
     font-size: 120pt;
     text-align: left;
+    top: 0px;
     left: 150px;
     user-select: none;
   }
@@ -96,7 +97,7 @@
   #fixedText {
     font-family: 'Raleway', sans-serif;
     font-size: 120pt;
-    position: absolute;
+    position: relative;
     top: -200pt;
     left: 150px;
     pointer-events: none;
@@ -115,9 +116,9 @@
 
 #descriText {
     
-    position: absolute;
-    top: 420pt;       /* 放在动态文字下方 */
-    left: 70px;          /* 相对于 container 是 0 */  
+    position: relative;
+    top: 180pt;       /* 放在动态文字下方 */
+    left: -250px;          /* 相对于 container 是 0 */  
     color: #333;
     line-height: 1.5;
 }
@@ -139,7 +140,7 @@
 
 #amtText {
     position: relative;
-    top: -190px;
+    top: -230px;
     left: 45px;
     font-family: 'Courier New', Courier, monospace;
     font-size: 70px;
@@ -150,21 +151,19 @@
 #psText {
     position :relative;
     left: -120px;
-    line-height: 0.4;
+    line-height: 1;
     font-family: 'Courier';
     font-weight: 700;
     font-size: 15pt;
-
-  line-height: 1.3;
 
 
 
 }
 
 .quote-wrapper {
-    position: absolute;   
-    left: 640px;           
-    bottom: -620px;         
+    position: relative;   
+    left:0px;           
+    bottom: 0px;         
     max-width: 400px;      
 }
 
@@ -216,12 +215,12 @@ h1{
   height: 100%;
   background-position: center;
   background-size: cover;
-  background-repeat: none;
+  background-repeat: no-repeat;
   transition: flex 0.8s ease;
-  
-  &:hover{
-    flex: 7;
-  }
+}
+
+.item:hover {
+  flex: 7;
 }
 
 .item-1 { 
