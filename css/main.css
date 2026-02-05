@@ -309,6 +309,12 @@ h1{
   flex: 7;
 }
 
+.gallery-wrap a.item {
+    display: block; /* 必须设置，否则 a 标签可能没有高度 */
+    text-decoration: none; /* 去除默认下划线 */
+    cursor: pointer; /* 确保鼠标悬停时显示手型 */
+}
+
 .item-1 { 
   background-image: url('https://images.unsplash.com/photo-1499198116522-4a6235013d63?auto=format&fit=crop&w=1233&q=80');
 }
