@@ -27,29 +27,69 @@
 
   .sidebar {
     position: fixed;
-    top: 70%;
-    right: 20px;
+    top: 50%; /* 居中放置 */
+    right: 30px;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
-    z-index: 10; /* 保证在最前面 */
-  }
+    gap: 20px; /* 点与点之间的间距 */
+    z-index: 100;
+}
 
-  .sidebar a {
-    color: #222;
+.sidebar a {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-decoration: none;
-    font-size: 1.2rem;
-    margin: 10px 0;
-    padding: 8px 16px;
-    border-radius: 6px;
-    transition: all 0.3s;
-    text-align: right;
-  }
+    position: relative;
+    /* 外层圆圈效果 */
+    border: 2px solid #222; 
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
 
-  .sidebar a.active, .sidebar a:hover {
+/* 内部实心点 */
+.sidebar a .dot {
+    width: 0px; /* 默认隐藏或极小 */
+    height: 0px;
     background-color: #222;
-    color: #fff;
-  }
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+/* 悬停效果：外圈变色 */
+.sidebar a:hover {
+    border-color: red; /* 或者你喜欢的颜色 */
+}
+
+/* Active 激活状态：圆点填满圆圈中心 */
+.sidebar a.active {
+    border-color: #222;
+}
+
+.sidebar a.active .dot {
+    width: 10px; /* 激活时显示的圆点大小 */
+    height: 10px;
+}
+
+/* 如果想加文字提示（可选），可以加这个伪元素 */
+.sidebar a::before {
+    content: attr(data-label); /* 如果你在 HTML 加了 data-label="Home" */
+    position: absolute;
+    right: 30px;
+    opacity: 0;
+    transition: 0.3s;
+    font-size: 12px;
+    color: #222;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.sidebar a:hover::before {
+    opacity: 1;
+}
 
 
   section {
@@ -61,29 +101,53 @@
     background: transparent; /* 关键：必须透明，否则会遮挡动画 */
   }
 
-  #section3 {
+#section3 {
     position: relative;
-    transition: background-image 0.5s ease-in-out; /* 让背景切换更平滑 */
+    overflow: hidden;
+    background-color: transparent; /* 必须透明，否则看不到后面的图 */
+    z-index: 1; /* 提升 section 层级，确保在 bg-waves 之上 */
+}
+
+.section-bg-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* 在内容后面 */
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
-    /* 初始背景（可选） */
-    background-image: none; 
+    opacity: 0;
+    transition: all 0.6s ease;
+    pointer-events: none; /* 极其重要：防止遮挡鼠标 */
 }
 
-/* 为了让内容在背景图上更清晰，可以加一个半透明遮罩（可选） */
-#section3::before {
-    content: "";
+.section-bg-front {
     position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(255, 255, 255, 0.2); /* 淡淡的白色遮罩 */
-    z-index: 0;
+    bottom: 70px;
+    right: 0px;
+    width: 700px;
+    height: 700px;
+    z-index: 10; /* 在内容前面 */
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: all 0.6s ease;
+    pointer-events: none; /* 极其重要：防止挡住鼠标导致无法再次 hover */
+    /* 建议：给前景图加一个混合模式，效果会更艺术 */
+    mix-blend-mode: screen; 
 }
 
-/* 确保 gallery 内容在遮罩层之上 */
+/* 激活状态 */
+.section-bg-back.is-active,
+.section-bg-front.is-active {
+    opacity: 1;
+}
+
+/* 解决往左歪的问题 */
 #section3 .container {
-    position: relative;
-    z-index: 1;
+    position: relative; /* 确保内容在两个背景层之间 */
+    z-index: 5; /* 确保在后景之上，前景之下 */
 }
 
   /* Morphing Text Styles */

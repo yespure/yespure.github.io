@@ -10,12 +10,14 @@
 
 <div class="curzr" hidden></div> 
 <div class="sidebar">
-  <a href="#section1" class="active">Home</a>
-  <a href="#section2">AboutMe</a>
-  <a href="#section3">Projects</a>
-  <a href="#section4">World</a>
-  <a href="#section5">Ideas</a>
-  <a href="#section6">Contact</a>
+<div class="sidebar">
+  <a href="#section1" class="active"><span class="dot"></span></a>
+  <a href="#section2"><span class="dot"></span></a>
+  <a href="#section3"><span class="dot"></span></a>
+  <a href="#section4"><span class="dot"></span></a>
+  <a href="#section5"><span class="dot"></span></a>
+  <a href="#section6"><span class="dot"></span></a>
+</div>
 </div>
 
 <div class="main">
@@ -70,18 +72,19 @@
   </div>
   </section>
   <section id="section3">
+  <div class="section-bg-back"></div> 
+  
   <div class="container">
-  <h1>Gallery</h1>
-
-  <div class="gallery-wrap">
-    <div class="item item-1"data-hover-bg="url('images/gallery1.png')"></div>
-    <div class="item item-2"data-hover-bg="url('images/gallery2.png')"></')"></div>
-    <div class="item item-3"data-hover-bg="url('images/gallery3.png')"></')"></div>
-    <div class="item item-4"data-hover-bg="url('images/gallery4.png')"></')"></div>
-    <div class="item item-5"data-hover-bg="url('images/gallery5.png')"></')"></div>
+    <h1>Gallery</h1>
+    <div class="gallery-wrap">
+      <div class="item item-1" data-back-bg="url('images/testbackground.png')" data-front-bg="url('images/testbackground.png')"></div>
+      <div class="item item-2" data-back-bg="url('images/testbackground.png')" data-front-bg="url('images/testbackground.png')"></div>
+      <div class="item item-3" data-back-bg="url('images/testbackground.png')" data-front-bg="url('images/testbackground.png')"></div>
+      </div>
   </div>
- </div>
-  </section>
+
+  <div class="section-bg-front"></div> 
+</section>
   <section id="section4">World Building</section>
   <section id="section5">Ideas</section>
   <section id="section6">Contact</section>

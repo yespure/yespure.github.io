@@ -1,22 +1,40 @@
 // 确保 DOM 加载完成后执行
 document.addEventListener('DOMContentLoaded', () => {
     const section3 = document.querySelector('#section3');
-    const items = document.querySelectorAll('#section3 .item');
+    const backBgLayer = section3.querySelector('.section-bg-back');
+    const frontBgLayer = section3.querySelector('.section-bg-front');
+    const galleryItems = document.querySelectorAll('#section3 .item');
 
-    items.forEach(item => {
+    galleryItems.forEach(item => {
         item.addEventListener('mouseenter', function() {
-            // 明确获取 data-hover-bg 的值
-            const customBg = this.getAttribute('data-hover-bg');
-            if (customBg) {
-                section3.style.backgroundImage = customBg;
-                section3.style.backgroundSize = 'cover';
-                section3.style.backgroundPosition = 'center';
+            // 获取后景图片路径
+            const backBgUrl = this.getAttribute('data-back-bg');
+            // 获取前景图片路径
+            const frontBgUrl = this.getAttribute('data-front-bg');
+
+            // 设置后景
+            if (backBgUrl) {
+                backBgLayer.style.backgroundImage = backBgUrl;
+                backBgLayer.classList.add('is-active');
+            }
+
+            // 设置前景
+            if (frontBgUrl) {
+                frontBgLayer.style.backgroundImage = frontBgUrl;
+                frontBgLayer.classList.add('is-active');
             }
         });
 
         item.addEventListener('mouseleave', function() {
-            // 鼠标离开时清空背景
-            section3.style.backgroundImage = 'none';
+            // 鼠标离开时移除激活类，背景图会渐隐
+            backBgLayer.classList.remove('is-active');
+            frontBgLayer.classList.remove('is-active');
+            
+            // 可以选择在这里清空 backgroundImage，以释放内存或防止不必要的显示
+            // setTimeout(() => {
+            //     backBgLayer.style.backgroundImage = 'none';
+            //     frontBgLayer.style.backgroundImage = 'none';
+            // }, 600); // 确保在过渡结束后清空
         });
     });
 });
