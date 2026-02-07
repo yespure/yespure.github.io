@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html data-theme="dark">
+
+<head>
+  <title><% TITLE %></title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+
+  <link rel="icon" href="https://s14.gifyu.com/images/bHgWn.webp">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="css/project.css">
+
+  <script>
+    (function() {
+      const r = document.documentElement,
+        t = localStorage.getItem("theme") || "light",
+        f = localStorage.getItem("fontSize") || "1"
+      r.setAttribute("data-theme", t)
+      r.style.setProperty("--fontSize", f + "rem")
+      localStorage.setItem("theme", t)
+      localStorage.setItem("fontSize", f)
+    })()
+    document.addEventListener("DOMContentLoaded", () => {
+      const r = document.documentElement,
+        c = document.getElementById("checkbox")
+      if (localStorage.getItem("theme") === "light") c.checked = true
+      c.addEventListener("change", e => {
+        const t = e.target.checked ? "light" : "dark";
+        r.setAttribute("data-theme", t);
+        localStorage.setItem("theme", t)
+      })
+      const cf = d => {
+        let s = parseFloat(getComputedStyle(r).getPropertyValue("--fontSize")) || 1,
+          n = Math.min(2, Math.max(0.6, s + d * 0.1));
+        r.style.setProperty("--fontSize", n + "rem");
+        localStorage.setItem("fontSize", n)
+      }
+      document.getElementById("font-up").addEventListener("click", () => cf(1))
+      document.getElementById("font-down").addEventListener("click", () => cf(-1))
+      document.getElementById("font-reset").addEventListener("click", () => {
+        r.style.setProperty("--fontSize", "1rem");
+        localStorage.setItem("fontSize", "1")
+      })
+    })
+  </script>
+
+<body act="<!-- |input_act| -->" code="<!-- |input_CODE| -->" topic="<!-- |input_showtopic| -->" forum="<!-- |input_showforum| -->" group="<!-- |g_id| -->" parent="<!-- |parent_id| -->">
+
+  <div id="overlay" class="texture"></div>
+  <div id="overlay" class="dark"></div>
+  <div id="underlay" class="background"></div>
+
+  <div class="topbar" style="position: sticky; z-index: 9990; top: 0px; width: 100%; background: var(--darker); padding: var(--padding);">
+    <button id="moduleToggle">☰</button>
+  </div>
+
+  <wrapper id="outerWrapper">
+
+    <div class="tailFocalTop" style="display: none;">
+      <img src="https://s14.gifyu.com/images/bNAa6.webp">
+    </div>
+
+    <div id="popUpModule">
+      <div class="moduleContent">
+        <button id="moduleClose">×</button>
+        <label class="theme-switch" for="checkbox" id="theme_switch_click">
+          <input type="checkbox" id="checkbox">
+          <span class="dark"><i class="fa-thin fa-lightbulb"></i></span>
+          <span class="light"><i class="fa-light fa-lightbulb-on"></i></span>
+        </label>
+        <button id="font-down">A-</button>
+        <button id="font-up">A+</button>
+        <button id="font-reset">Reset</button>
+      </div>
+    </div>
+
+    <header id="boardHeader">
+      <div class="headerDividers">
+        <section class="headerLeft">
+          <Div class="focalIMG"><img src="https://s14.gifyu.com/images/bN5XQ.webp"></div>
+          <div class="boardTitle">
+            <span>back</span> light
+          </div>
+          <div class="boardSubtitle">
+            i do not know if it is real<br>
+            but all is <b>quiet</b> now.
+          </div>
+          <div class="headerCutout">
+            <img src="https://s14.gifyu.com/images/bNAZd.webp">
+          </div>
+        </section>
+        <section class="headerRight">
+          <div class="leftFocal"><img src="https://s14.gifyu.com/images/bN5XQ.webp"></div>
+          <div class="rightFocal"><img src="https://s14.gifyu.com/images/bNDSR.webp"></div>
+          <div class="rightFocal2"><img src="https://s14.gifyu.com/images/bNDSV.webp"></div>
+        </section>
+      </div>
+
+    </header>
+    <section id="underHeader">
+      <div class="tabContainer">
+        <div class="tabContent">
+          <div class="tabConnection"></div>
+          <div class="tabPanel active" id="tab1">
+            <div class="tabPadding introduction">
+              <div class="tabPanelTitle">
+                <span class="panelTitle">welcome to <b>back light</b></span>
+                <span class="panelSubtitle"><img src="https://s14.gifyu.com/images/bNAZd.webp"><span>a first <b>impression</b></span></span>
+              </div>
+              <div class="divider">
+                <div class="bubble"></div>
+                <div class="bubble2"></div>
+              </div>
+              <div class="tabArticle welcomeBlurb">
+                Welcome to <b>Back Light</b> - an original character roleplay forum hosted on the Jcink Premium platform.
+              </div>
+            </div>
+          </div>
+          <div class="tabPanel" id="tab2">
+            <div class="tabPadding istilldontknow">
+              <div class="tabPanelTitle">
+                <span class="panelTitle">Credits & <b>accolades</b></span>
+                <span class="panelSubtitle"><img src="https://s14.gifyu.com/images/bNAZd.webp"><span>Giving you your <b>flowers</b></span></span>
+              </div>
+              <div class="divider">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble2"></div>
+              </div>
+              <div class="tabArticle idkyet">
+                here
+              </div>
+            </div>
+          </div>
+          <div class="tabPanel" id="tab3">
+            <div class="tabPadding curtainCall">
+              <div class="staff">
+                <a href="/index.php?showuser=2">
+                  <div class="admin October">
+                    <img src="https://s14.gifyu.com/images/bNAJS.webp">
+                    <span>October</span>
+                  </div>
+                </a>
+                <a href="/index.php?showuser=3">
+                  <div class="admin Majora">
+                    <img src="https://s14.gifyu.com/images/bNAJb.webp">
+                    <span>Majora</span>
+                  </div>
+                </a>
+              </div>
+              <div class="tabPanelTitle">
+                <span class="panelTitle">Credits & <b>accolades</b></span>
+                <span class="panelSubtitle"><img src="https://s14.gifyu.com/images/bNAZd.webp"><span>Giving you your <b>flowers</b></span></span>
+              </div>
+              <div class="divider">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble2"></div>
+              </div>
+              <div class="tabArticle accolades">
+                Skin and templates crafted by <a href="/index.php?showuser=2">October</a>, with the greatest of shout-outs to <a href="#">plugin 1</a>, <a href="#">plugin 2</a>, and <a href="#">plugin 3</a>. Formal writing and structuring by the magnificent <a href="/index.php?showuser=3">Majora</a>. Artwork featured in our skin belongs to the talented <a href="#">link here</a>. Worldbuilding draws inspiration from some of our favourite source materials, including: <i>one, two, three</i>.
+
+                Please review respective member profiles for credit to any resources they've used. To the artists, coders, and writers whose sparks ignited our own, thank-you so very much.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabButtons">
+          <button data-tab="tab1" class="active">
+            <img src="https://s14.gifyu.com/images/bNAVm.webp">
+          </button>
+          <button data-tab="tab2">
+            <img src="https://s14.gifyu.com/images/bNAVq.webp"></button>
+          <button data-tab="tab3">
+            <img src="https://s14.gifyu.com/images/bNAVI.webp"></button>
+        </div>
+
+        <div class="staticDiv">
+
+          <div class="smallCarousel" id="carousel">
+            <button class="navBtn prev" id="prevBtn" aria-label="Previous">&lt;</button>
+            <div class="carouselViewport">
+              <div class="slides">
+                <div class="slide announcementSlide">
+                  <a href="##">
+                    <img src="https://s14.gifyu.com/images/bNXku.webp">
+                    <b>announcement</b> 00.00.00 grand opening!
+                  </a>
+                </div>
+                <div class="slide announcementSlide eventSlide">
+                  <a href="##">
+                    <img src="https://s14.gifyu.com/images/bNXku.webp">
+                    <b>event</b> coming soon!
+                  </a>
+
+                </div>
+              </div>
+            </div>
+            <button class="navBtn next" id="nextBtn" aria-label="Next">&gt;</button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="topBarNav" style="display: none;">
+      <div class="topBarTree">
+        <% NAVIGATION %>
+      </div>
+    </div>
+
+    <div id="innerWrapper">
+      here
+    </div>
+
+  </wrapper>
+
+</body>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const checkbox = document.getElementById("checkbox");
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "light") {
+      checkbox.checked = true;
+    }
+    checkbox.addEventListener("change", () => {
+      const newTheme = checkbox.checked ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", newTheme);
+      localStorage.setItem("theme", newTheme);
+    });
+  });
+</script>
+<script>
+  const moduleToggle = document.getElementById("moduleToggle")
+  const popUpModule = document.getElementById("popUpModule")
+  const moduleClose = document.getElementById("moduleClose")
+  moduleToggle.addEventListener("click", () => {
+    popUpModule.classList.toggle("active")
+  })
+  moduleClose.addEventListener("click", () => popUpModule.classList.remove("active"))
+  popUpModule.addEventListener("click", e => {
+    if (e.target === popUpModule) popUpModule.classList.remove("active")
+  })
+</script>
+<script>
+  const tabs = document.querySelectorAll("#underHeader .tabButtons button")
+  const panels = document.querySelectorAll("#underHeader .tabPanel")
+  tabs.forEach(tab => {
+    tab.addEventListener("click", () => {
+      tabs.forEach(t => t.classList.remove("active"))
+      tab.classList.add("active")
+      panels.forEach(p => p.classList.remove("active"))
+      document.getElementById(tab.dataset.tab).classList.add("active")
+    })
+  })
+</script>
+<script>
+  (() => {
+    const s = document.querySelector(".slides"),
+      sl = s.children,
+      p = document.getElementById("prevBtn"),
+      n = document.getElementById("nextBtn");
+    let i = 0,
+      d = 4000,
+      t;
+
+    function show(x) {
+      i = (x + sl.length) % sl.length;
+      s.style.transform = `translateX(-${i*100}%)`
+    }
+
+    function start() {
+      stop();
+      t = setInterval(() => show(i + 1), d)
+    }
+
+    function stop() {
+      if (t) clearInterval(t)
+    }
+    p.addEventListener("click", () => {
+      show(i - 1);
+      start()
+    });
+    n.addEventListener("click", () => {
+      show(i + 1);
+      start()
+    });
+    s.parentElement.addEventListener("mouseenter", stop);
+    s.parentElement.addEventListener("mouseleave", start);
+    show(0);
+    start()
+  })();
+</script>
