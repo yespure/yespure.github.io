@@ -283,10 +283,10 @@ html,body{
 h1{
   position: relative;
   margin-bottom: 45px;
-  font-family: 'Oswald', sans-serif;
+  font-family: 'Courier', sans-serif;
   font-size: 44px;
   text-transform: uppercase;
-  color: #424242;
+  color: #000000;
 }
 
 .gallery-wrap {
