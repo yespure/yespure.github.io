@@ -25,4 +25,18 @@
     sections.forEach(section => observer.observe(section));
   }
 
+  const emailForm = document.querySelector("#email-form");
+  if (emailForm) {
+    emailForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const data = new FormData(emailForm);
+      const name = String(data.get("name") || "").trim();
+      const replyEmail = String(data.get("email") || "").trim();
+      const message = String(data.get("message") || "").trim();
+      const subject = encodeURIComponent(`Portfolio message from ${name}`);
+      const body = encodeURIComponent(`${message}\n\n— ${name}\nReply to: ${replyEmail}`);
+      window.location.href = `mailto:Ltc061115@gmail.com?subject=${subject}&body=${body}`;
+    });
+  }
+
 })();
