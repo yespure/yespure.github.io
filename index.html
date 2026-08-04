@@ -3,44 +3,36 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Tiancheng Li — Art and Game Design portfolio">
+  <meta name="description" content="Tiancheng Li — artist and game designer portfolio">
   <title>Tiancheng Li — Art & Game Design</title>
   <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="index.html"><span class="brand-mark">TL</span><span>'26</span></a>
-    <nav class="navigation" aria-label="Main navigation">
-      <a href="games.html">Games</a><a href="tools.html">Tools</a><a href="2dart.html">2D Arts</a><a href="projects.html">Projects</a><a href="about.html">About</a>
-    </nav>
-    <a class="contact-button" href="mailto:your-email@example.com">Contact <span>&#8599;</span></a>
+    <a class="brand" href="index.html"><span class="brand-mark">TL</span><span>Tiancheng Li</span></a>
+    <nav class="navigation" aria-label="Main navigation"><a href="games.html">Games</a><a href="tools.html">Tools</a><a href="2dart.html">2D Art</a><a href="projects.html">Projects</a><a href="about.html">About</a></nav>
+    <a class="contact-button" href="mailto:Ltc061115@gmail.com">Say hello <span>↗</span></a>
   </header>
 
   <main>
-    <section class="home-hero page-frame">
-      <div class="hero-copy">
-        <p class="eyebrow">ARTIST · GAME DESIGNER · CREATIVE DEVELOPER</p>
-        <h1>Ideas shaped through <em>art, play and code.</em></h1>
-        <p class="hero-description">I’m Tiancheng Li. I create visual worlds, interactive experiences and experimental game projects.</p>
-        <div class="hero-actions"><a class="button" href="projects.html">Explore projects &#8600;</a><a class="text-link" href="2dart.html">View gallery &#8594;</a></div>
+    <section class="home-cover page-frame" id="cover" data-section="Cover">
+      <img src="Images/room-concept.png" alt="Dark interior environment concept artwork by Tiancheng Li">
+      <div class="cover-copy"><p class="eyebrow">Tiancheng Li / Portfolio 2026</p><h1>Art, games<br>& odd ideas.</h1><p>I make visual worlds, playable experiments and tools for creative work.</p></div>
+    </section>
+
+    <section class="intro-strip page-frame" id="currently" data-section="Currently"><p class="eyebrow">Currently</p><p>Exploring how rough images, strange spaces and small interactions can become memorable worlds.</p></section>
+
+    <section class="page-frame" id="selected-work" data-section="Work">
+      <div class="work-heading"><h2>Selected work</h2><a href="projects.html">All projects ↗</a></div>
+      <div class="featured-work">
+        <a class="work-card" href="2dart.html"><div class="work-media"><img src="Images/room-concept.png" alt="Interior environment concept artwork"></div><div class="work-copy"><div><small>01 / Environment study</small><h3>Room<br>Concept</h3><p>A layered, lived-in interior developed through light, texture and loose visual storytelling.</p></div><b>↗</b></div></a>
+        <article class="work-card work-card--reverse"><div class="work-media"><video controls playsinline preload="metadata" poster="Images/room-concept.png" aria-label="Creative process film"><source src="Images/process-film.mp4" type="video/mp4">Your browser does not support video playback.</video></div><div class="work-copy"><div><small>02 / Moving image</small><h3>Process<br>Film</h3><p>A short moving-image piece from the current collection. Play it here without leaving the portfolio.</p></div><b>▶</b></div></article>
       </div>
-      <div class="hero-image"><img src="Images/testbackground.png" alt="Selected artwork by Tiancheng Li"><span>Selected work · 2026</span></div>
     </section>
 
-    <section class="statement page-frame">
-      <p class="eyebrow">01 / SELECTED WORK</p>
-      <h2>Games, tools and images built through curiosity and experimentation.</h2>
-    </section>
-
-    <section class="home-grid page-frame">
-      <a class="home-card home-card--wide red" href="games.html"><div class="card-art">PLAY</div><div class="card-meta"><div><small>GAME DESIGN</small><h3>Games</h3></div><b>&#8599;</b></div></a>
-      <a class="home-card dark" href="tools.html"><div class="card-art">MAKE</div><div class="card-meta"><div><small>CREATIVE DEVELOPMENT</small><h3>Tools</h3></div><b>&#8599;</b></div></a>
-      <a class="home-card purple" href="2dart.html"><div class="card-art">SEE</div><div class="card-meta"><div><small>ILLUSTRATION</small><h3>2D Arts</h3></div><b>&#8599;</b></div></a>
-    </section>
-
-    <section class="home-about page-frame"><p class="eyebrow">02 / ABOUT</p><div><h2>Committed to sharing ideas through art—and exploring how images, systems and choices create meaningful experiences.</h2><a class="button button--light" href="about.html">More about me &#8599;</a></div></section>
+    <section class="home-about page-frame" id="about" data-section="About"><p class="eyebrow">About</p><div><h2>A personal archive of things I draw, build, test and occasionally finish.</h2><a class="button" href="about.html">A little more about me ↗</a></div></section>
   </main>
-
-  <footer class="site-footer"><span>&copy; 2026 Tiancheng Li</span><span>Art & Game Design Portfolio</span><a href="#">Back to top &#8593;</a></footer>
+  <footer class="site-footer"><span>© 2026 Tiancheng Li</span><span>Art & Game Design</span><a href="#">Back to top ↑</a></footer>
+  <script src="js/site.js"></script>
 </body>
 </html>
